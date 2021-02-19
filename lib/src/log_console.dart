@@ -63,7 +63,8 @@ class _LogConsoleState extends State<LogConsole> {
 
     _scrollController.addListener(() {
       if (!_scrollListenerEnabled) return;
-      var scrolledToBottom = _scrollController.offset >= _scrollController.position.maxScrollExtent;
+      var scrolledToBottom = _scrollController.offset >=
+          _scrollController.position.maxScrollExtent;
       setState(() {
         _followBottom = scrolledToBottom;
       });
@@ -330,5 +331,13 @@ class LogBar extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class LogOutput extends ConsoleOutput {
+  @override
+  void output(OutputEvent event) {
+    super.output(event);
+    LogConsole.add(event);
   }
 }
