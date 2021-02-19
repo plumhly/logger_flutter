@@ -334,7 +334,7 @@ class LogBar extends StatelessWidget {
   }
 }
 
-class LogOutput extends ConsoleOutput {
+class ConsoleLogOutput extends ConsoleOutput {
   @override
   void output(OutputEvent event) {
     super.output(event);
