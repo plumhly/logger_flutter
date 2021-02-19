@@ -129,41 +129,14 @@ class _LogConsoleState extends State<LogConsole> {
             ],
           ),
         ),
-        floatingActionButton: Column(
-          children: [
-            AnimatedOpacity(
-              opacity: _followBottom ? 0 : 1,
-              duration: Duration(milliseconds: 150),
-              child: Padding(
-                padding: EdgeInsets.only(bottom: 60),
-                child: FloatingActionButton(
-                  mini: true,
-                  clipBehavior: Clip.antiAlias,
-                  child: Icon(
-                    Icons.file_copy,
-                    color: widget.dark ? Colors.white : Colors.lightBlue[900],
-                  ),
-                  onPressed: _copyData,
-                ),
-              ),
-            ),
-            AnimatedOpacity(
-              opacity: _followBottom ? 0 : 1,
-              duration: Duration(milliseconds: 150),
-              child: Padding(
-                padding: EdgeInsets.only(bottom: 60),
-                child: FloatingActionButton(
-                  mini: true,
-                  clipBehavior: Clip.antiAlias,
-                  child: Icon(
-                    Icons.arrow_downward,
-                    color: widget.dark ? Colors.white : Colors.lightBlue[900],
-                  ),
-                  onPressed: _scrollToBottom,
-                ),
-              ),
-            ),
-          ],
+        floatingActionButton: FloatingActionButton(
+          mini: true,
+          clipBehavior: Clip.antiAlias,
+          child: Icon(
+            Icons.file_copy,
+            color: widget.dark ? Colors.white : Colors.lightBlue[900],
+          ),
+          onPressed: _copyData,
         ),
       ),
     );
@@ -310,12 +283,9 @@ class _LogConsoleState extends State<LogConsole> {
   }
 
   void _copyData() {
-    Clipboard.setData(ClipboardData(text: _filteredBuffer.toString()));
-    Scaffold.of(context).showSnackBar(
-      SnackBar(
-        content: Text("Copy Success!"),
-      ),
-    );
+    final text =
+        _filteredBuffer.map((e) => e.lowerCaseText).toList().toString();
+    Clipboard.setData(ClipboardData(text: text));
   }
 
   RenderedEvent _renderEvent(OutputEvent event) {
