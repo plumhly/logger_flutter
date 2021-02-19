@@ -129,21 +129,41 @@ class _LogConsoleState extends State<LogConsole> {
             ],
           ),
         ),
-        floatingActionButton: AnimatedOpacity(
-          opacity: _followBottom ? 0 : 1,
-          duration: Duration(milliseconds: 150),
-          child: Padding(
-            padding: EdgeInsets.only(bottom: 60),
-            child: FloatingActionButton(
-              mini: true,
-              clipBehavior: Clip.antiAlias,
-              child: Icon(
-                Icons.arrow_downward,
-                color: widget.dark ? Colors.white : Colors.lightBlue[900],
+        floatingActionButton: Column(
+          children: [
+            AnimatedOpacity(
+              opacity: _followBottom ? 0 : 1,
+              duration: Duration(milliseconds: 150),
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 60),
+                child: FloatingActionButton(
+                  mini: true,
+                  clipBehavior: Clip.antiAlias,
+                  child: Icon(
+                    Icons.file_copy,
+                    color: widget.dark ? Colors.white : Colors.lightBlue[900],
+                  ),
+                  onPressed: _copyData,
+                ),
               ),
-              onPressed: _scrollToBottom,
             ),
-          ),
+            AnimatedOpacity(
+              opacity: _followBottom ? 0 : 1,
+              duration: Duration(milliseconds: 150),
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 60),
+                child: FloatingActionButton(
+                  mini: true,
+                  clipBehavior: Clip.antiAlias,
+                  child: Icon(
+                    Icons.arrow_downward,
+                    color: widget.dark ? Colors.white : Colors.lightBlue[900],
+                  ),
+                  onPressed: _scrollToBottom,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -287,6 +307,15 @@ class _LogConsoleState extends State<LogConsole> {
     );
 
     _scrollListenerEnabled = true;
+  }
+
+  void _copyData() {
+    Clipboard.setData(ClipboardData(text: _filteredBuffer.toString()));
+    Scaffold.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Copy Success!"),
+      ),
+    );
   }
 
   RenderedEvent _renderEvent(OutputEvent event) {
